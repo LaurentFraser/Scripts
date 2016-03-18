@@ -1,0 +1,301 @@
+# =================================================================================================================
+# ------------------------------------------------Script : FDist---------------------------------------------------
+# ------------------------------------------------Par : Fraser, L.-------------------------------------------------
+# =================================================================================================================
+
+# 1. Generalities =================================================================================================
+
+  rm(list=ls(all=TRUE))
+  setwd("/Users/LaurentFraser/Desktop/Master/SCRIPT R/CSV")
+  library(FD)
+  library(car)
+
+# 2. Logit transformation on 0..1 proportion data =================================================================
+  
+  data <- read.csv("data.hetero.csv", header=1)
+    attach(data)
+    data.logit <- data[c(1:315,331:385),c(5:23)]
+      data.logit <- logit(data.logit,adjust= 0.001)
+      data[c(1:315,331:385),c(5:23)]<-data.logit
+      flo                     <- powerTransform(flow+0.01)
+      data$flow               <- bcPower((data$flow+0.01), coef(flo))
+# 3. Submatrix creation ===========================================================================================
+    
+  cham01<-data[1:5,c(5:24)]
+  cham02<-data[6:10,c(5:24)]
+  cham03<-data[11:15,c(5:24)]
+  cham04<-data[16:20,c(5:24)]
+  cham05<-data[21:25,c(5:24)]
+  cham06<-data[26:30,c(5:24)]
+  cham07<-data[31:35,c(5:24)]
+
+  gasc01<-data[36:40,c(5:24)]
+  gasc02<-data[41:45,c(5:24)]
+  gasc03<-data[46:50,c(5:24)]
+  gasc07<-data[51:55,c(5:24)]
+  gasc08<-data[56:60,c(5:24)]
+  gasc09<-data[61:65,c(5:24)]
+  gasc10<-data[66:70,c(5:24)]
+  gasc11<-data[71:75,c(5:24)]
+  gasc12<-data[76:80,c(5:24)]
+  gasc13<-data[81:85,c(5:24)]
+  gasc14<-data[86:90,c(5:24)]
+
+  lapi01<-data[91:95,c(5:24)]
+  lapi02<-data[96:100,c(5:24)]
+  lapi03<-data[101:105,c(5:24)]
+  lapi04<-data[106:110,c(5:24)]
+  lapi05<-data[111:115,c(5:24)]
+  lapi06<-data[116:120,c(5:24)]
+  lapi07<-data[121:125,c(5:24)]
+  lapi08<-data[126:130,c(5:24)]
+  lapi09<-data[131:135,c(5:24)]
+  lapi10<-data[136:140,c(5:24)]
+  lapi11<-data[141:145,c(5:24)]
+  lapi12<-data[146:150,c(5:24)]
+  lapi13<-data[151:155,c(5:24)]
+  lapi14<-data[156:160,c(5:24)]
+  lapi15<-data[161:165,c(5:24)]
+  lapi16<-data[166:170,c(5:24)]
+  lapi17<-data[171:175,c(5:24)]
+
+  papi01<-data[176:180,c(5:24)]
+  papi03<-data[181:185,c(5:24)]
+  papi05<-data[186:190,c(5:24)]
+  papi07<-data[191:195,c(5:24)]
+  papi09<-data[196:200,c(5:24)]
+  papi17<-data[201:205,c(5:24)]
+  papi19<-data[206:210,c(5:24)]
+  papi21<-data[211:215,c(5:24)]
+  papi23<-data[216:220,c(5:24)]
+  papi25<-data[221:225,c(5:24)]
+  papi27<-data[226:230,c(5:24)]
+
+  para01<-data[231:235,c(5:24)]
+  para02<-data[236:240,c(5:24)]
+  para03<-data[241:245,c(5:24)]
+  para04<-data[245:250,c(5:24)]
+  para05<-data[251:255,c(5:24)]
+  para06<-data[256:260,c(5:24)]
+  para07<-data[261:265,c(5:24)]
+  para08<-data[266:270,c(5:24)]
+  para09<-data[271:275,c(5:24)]
+  para10<-data[276:280,c(5:24)]
+  para11<-data[281:285,c(5:24)]
+  para12<-data[286:290,c(5:24)]
+  para13<-data[291:295,c(5:24)]
+  para14<-data[296:300,c(5:24)]
+  para15<-data[301:305,c(5:24)]
+  para16<-data[306:310,c(5:24)]
+  para17<-data[311:315,c(5:24)]
+
+  stri01<-data[316:320,c(5:24)]
+  stri02<-data[321:325,c(5:24)]
+  stri03<-data[326:330,c(5:24)]
+  
+  stro01<-data[331:335,c(5:24)]
+  stro02<-data[336:340,c(5:24)]
+  stro03<-data[341:345,c(5:24)]
+  stro04<-data[346:350,c(5:24)]
+  stro05<-data[351:355,c(5:24)]
+
+  vivi01<-data[356:360,c(5:24)]
+  vivi02<-data[361:365,c(5:24)]
+  vivi03<-data[366:370,c(5:24)]
+  vivi04<-data[371:375,c(5:24)]
+  vivi05<-data[376:380,c(5:24)]
+  vivi06<-data[381:385,c(5:24)]
+
+# 4. Calcul FDist ================================================================================================
+
+  dcham01<-dbFD(cham01, clust.type = "centroid", stand.x = FALSE)
+    cham01<-c(dcham01$FRic,dcham01$FEve,dcham01$FDiv,dcham01$FDis,dcham01$RaoQ)
+  dcham02<-dbFD(cham02, clust.type = "centroid", stand.x = FALSE)
+    cham02<-c(dcham02$FRic,dcham02$FEve,dcham02$FDiv,dcham02$FDis,dcham02$RaoQ)
+  dcham03<-dbFD(cham03, clust.type = "centroid", stand.x = FALSE)
+    cham03<-c(dcham03$FRic,dcham03$FEve,dcham03$FDiv,dcham03$FDis,dcham03$RaoQ)
+  dcham04<-dbFD(cham04, clust.type = "centroid", stand.x = FALSE)
+    cham04<-c(dcham04$FRic,dcham04$FEve,dcham04$FDiv,dcham04$FDis,dcham04$RaoQ)
+  dcham05<-dbFD(cham05, clust.type = "centroid", stand.x = FALSE)
+    cham05<-c(dcham05$FRic,dcham05$FEve,dcham05$FDiv,dcham05$FDis,dcham05$RaoQ)
+  dcham06<-dbFD(cham06, clust.type = "centroid", stand.x = FALSE)
+    cham06<-c(dcham06$FRic,dcham06$FEve,dcham06$FDiv,dcham06$FDis,dcham06$RaoQ)
+  dcham07<-dbFD(cham07, clust.type = "centroid", stand.x = FALSE)
+    cham07<-c(dcham07$FRic,dcham07$FEve,dcham07$FDiv,dcham07$FDis,dcham07$RaoQ)
+    
+  dpapi01<-dbFD(papi01, clust.type = "centroid", stand.x = FALSE)
+  papi01<-c(dpapi01$FRic,dpapi01$FEve,dpapi01$FDiv,dpapi01$FDis,dpapi01$RaoQ)
+  dpapi03<-dbFD(papi03, clust.type = "centroid", stand.x = FALSE)
+  papi03<-c(dpapi03$FRic,dpapi03$FEve,dpapi03$FDiv,dpapi03$FDis,dpapi03$RaoQ)
+  dpapi05<-dbFD(papi05, clust.type = "centroid", stand.x = FALSE)
+  papi05<-c(dpapi05$FRic,dpapi05$FEve,dpapi05$FDiv,dpapi05$FDis,dpapi05$RaoQ)
+  dpapi07<-dbFD(papi07, clust.type = "centroid", stand.x = FALSE)
+  papi07<-c(dpapi07$FRic,dpapi07$FEve,dpapi07$FDiv,dpapi07$FDis,dpapi07$RaoQ)
+  dpapi09<-dbFD(papi09, clust.type = "centroid", stand.x = FALSE)
+  papi09<-c(dpapi09$FRic,dpapi09$FEve,dpapi09$FDiv,dpapi09$FDis,dpapi09$RaoQ)
+  papi11 <- c(NA,NA,NA,NA,NA)
+  papi13 <- c(NA,NA,NA,NA,NA)
+  papi15 <- c(NA,NA,NA,NA,NA)
+  dpapi17<-dbFD(papi17, clust.type = "centroid", stand.x = FALSE)
+  papi17<-c(dpapi17$FRic,dpapi17$FEve,dpapi17$FDiv,dpapi17$FDis,dpapi17$RaoQ)
+  dpapi19<-dbFD(papi19, clust.type = "centroid", stand.x = FALSE)
+  papi19<-c(dpapi19$FRic,dpapi19$FEve,dpapi19$FDiv,dpapi19$FDis,dpapi19$RaoQ)
+  dpapi21<-dbFD(papi21, clust.type = "centroid", stand.x = FALSE)
+  papi21<-c(dpapi21$FRic,dpapi21$FEve,dpapi21$FDiv,dpapi21$FDis,dpapi21$RaoQ)
+  dpapi23<-dbFD(papi23, clust.type = "centroid", stand.x = FALSE)
+  papi23<-c(dpapi23$FRic,dpapi23$FEve,dpapi23$FDiv,dpapi23$FDis,dpapi23$RaoQ)
+  dpapi25<-dbFD(papi25, clust.type = "centroid", stand.x = FALSE)
+  papi25<-c(dpapi25$FRic,dpapi25$FEve,dpapi25$FDiv,dpapi25$FDis,dpapi25$RaoQ)
+  dpapi27<-dbFD(papi27, clust.type = "centroid", stand.x = FALSE)
+  papi27<-c(dpapi27$FRic,dpapi27$FEve,dpapi27$FDiv,dpapi27$FDis,dpapi27$RaoQ)
+
+  dstro01<-dbFD(stro01, clust.type = "centroid", stand.x = FALSE)
+  stro01<-c(dstro01$FRic,dstro01$FEve,dstro01$FDiv,dstro01$FDis,dstro01$RaoQ)
+  dstro02<-dbFD(stro02, clust.type = "centroid", stand.x = FALSE)
+  stro02<-c(dstro02$FRic,dstro02$FEve,dstro02$FDiv,dstro02$FDis,dstro02$RaoQ)
+  dstro03<-dbFD(stro03, clust.type = "centroid", stand.x = FALSE)
+  stro03<-c(dstro03$FRic,dstro03$FEve,dstro03$FDiv,dstro03$FDis,dstro03$RaoQ)
+  dstro04<-dbFD(stro04, clust.type = "centroid", stand.x = FALSE)
+  stro04<-c(dstro04$FRic,dstro04$FEve,dstro04$FDiv,dstro04$FDis,dstro04$RaoQ)
+  dstro05<-dbFD(stro05, clust.type = "centroid", stand.x = FALSE)
+  stro05<-c(dstro05$FRic,dstro05$FEve,dstro05$FDiv,dstro05$FDis,dstro05$RaoQ)
+
+  dvivi01<-dbFD(vivi01, clust.type = "centroid", stand.x = FALSE)
+  vivi01<-c(dvivi01$FRic,dvivi01$FEve,dvivi01$FDiv,dvivi01$FDis,dvivi01$RaoQ)
+  dvivi02<-dbFD(vivi02, clust.type = "centroid", stand.x = FALSE)
+  vivi02<-c(dvivi02$FRic,dvivi02$FEve,dvivi02$FDiv,dvivi02$FDis,dvivi02$RaoQ)
+  dvivi03<-dbFD(vivi03, clust.type = "centroid", stand.x = FALSE)
+  vivi03<-c(dvivi03$FRic,dvivi03$FEve,dvivi03$FDiv,dvivi03$FDis,dvivi03$RaoQ)
+  dvivi04<-dbFD(vivi04, clust.type = "centroid", stand.x = FALSE)
+  vivi04<-c(dvivi04$FRic,dvivi04$FEve,dvivi04$FDiv,dvivi04$FDis,dvivi04$RaoQ)
+  dvivi05<-dbFD(vivi05, clust.type = "centroid", stand.x = FALSE)
+  vivi05<-c(dvivi05$FRic,dvivi05$FEve,dvivi05$FDiv,dvivi05$FDis,dvivi05$RaoQ)
+  dvivi06<-dbFD(vivi06, clust.type = "centroid", stand.x = FALSE)
+  vivi06<-c(dvivi06$FRic,dvivi06$FEve,dvivi06$FDiv,dvivi06$FDis,dvivi06$RaoQ)
+
+  dpara01<-dbFD(para01, clust.type = "centroid", stand.x = FALSE)
+  para01<-c(dpara01$FRic,dpara01$FEve,dpara01$FDiv,dpara01$FDis,dpara01$RaoQ)
+  dpara02<-dbFD(para02, clust.type = "centroid", stand.x = FALSE)
+  para02<-c(dpara02$FRic,dpara02$FEve,dpara02$FDiv,dpara02$FDis,dpara02$RaoQ)
+  dpara03<-dbFD(para03, clust.type = "centroid", stand.x = FALSE)
+  para03<-c(dpara03$FRic,dpara03$FEve,dpara03$FDiv,dpara03$FDis,dpara03$RaoQ)
+  dpara04<-dbFD(para04, clust.type = "centroid", stand.x = FALSE)
+  para04<-c(dpara04$FRic,dpara04$FEve,dpara04$FDiv,dpara04$FDis,dpara04$RaoQ)
+  dpara05<-dbFD(para05, clust.type = "centroid", stand.x = FALSE)
+  para05<-c(dpara05$FRic,dpara05$FEve,dpara05$FDiv,dpara05$FDis,dpara05$RaoQ)
+  dpara06<-dbFD(para06, clust.type = "centroid", stand.x = FALSE)
+  para06<-c(dpara06$FRic,dpara06$FEve,dpara06$FDiv,dpara06$FDis,dpara06$RaoQ)
+  dpara07<-dbFD(para07, clust.type = "centroid", stand.x = FALSE)
+  para07<-c(dpara07$FRic,dpara07$FEve,dpara07$FDiv,dpara07$FDis,dpara07$RaoQ)
+  dpara08<-dbFD(para08, clust.type = "centroid", stand.x = FALSE)
+  para08<-c(dpara08$FRic,dpara08$FEve,dpara08$FDiv,dpara08$FDis,dpara08$RaoQ)
+  dpara09<-dbFD(para09, clust.type = "centroid", stand.x = FALSE)
+  para09<-c(dpara09$FRic,dpara09$FEve,dpara09$FDiv,dpara09$FDis,dpara09$RaoQ)
+  dpara10<-dbFD(para10, clust.type = "centroid", stand.x = FALSE)
+  para10<-c(dpara10$FRic,dpara10$FEve,dpara10$FDiv,dpara10$FDis,dpara10$RaoQ)
+  dpara11<-dbFD(para11, clust.type = "centroid", stand.x = FALSE)
+  para11<-c(dpara11$FRic,dpara11$FEve,dpara11$FDiv,dpara11$FDis,dpara11$RaoQ)
+  dpara12<-dbFD(para12, clust.type = "centroid", stand.x = FALSE)
+  para12<-c(dpara12$FRic,dpara12$FEve,dpara12$FDiv,dpara12$FDis,dpara12$RaoQ)
+  dpara13<-dbFD(para13, clust.type = "centroid", stand.x = FALSE)
+  para13<-c(dpara13$FRic,dpara13$FEve,dpara13$FDiv,dpara13$FDis,dpara13$RaoQ)
+  dpara14<-dbFD(para14, clust.type = "centroid", stand.x = FALSE)
+  para14<-c(dpara14$FRic,dpara14$FEve,dpara14$FDiv,dpara14$FDis,dpara14$RaoQ)
+  dpara15<-dbFD(para15, clust.type = "centroid", stand.x = FALSE)
+  para15<-c(dpara15$FRic,dpara15$FEve,dpara15$FDiv,dpara15$FDis,dpara15$RaoQ)
+  dpara16<-dbFD(para16, clust.type = "centroid", stand.x = FALSE)
+  para16<-c(dpara16$FRic,dpara16$FEve,dpara16$FDiv,dpara16$FDis,dpara16$RaoQ)
+  dpara17<-dbFD(para17, clust.type = "centroid", stand.x = FALSE)
+  para17<-c(dpara17$FRic,dpara17$FEve,dpara17$FDiv,dpara17$FDis,dpara17$RaoQ)
+
+  dgasc01<-dbFD(gasc01, clust.type = "centroid", stand.x = FALSE)
+  gasc01<-c(dgasc01$FRic,dgasc01$FEve,dgasc01$FDiv,dgasc01$FDis,dgasc01$RaoQ)
+  dgasc02<-dbFD(gasc02, clust.type = "centroid", stand.x = FALSE)
+  gasc02<-c(dgasc02$FRic,dgasc02$FEve,dgasc02$FDiv,dgasc02$FDis,dgasc02$RaoQ)
+  dgasc03<-dbFD(gasc03, clust.type = "centroid", stand.x = FALSE)
+  gasc03<-c(dgasc03$FRic,dgasc03$FEve,dgasc03$FDiv,dgasc03$FDis,dgasc03$RaoQ)
+  gasc04 <- c(NA,NA,NA,NA,NA)
+  gasc05 <- c(NA,NA,NA,NA,NA)
+  gasc06 <- c(NA,NA,NA,NA,NA)
+  dgasc07<-dbFD(gasc07, clust.type = "centroid", stand.x = FALSE)
+  gasc07<-c(dgasc07$FRic,dgasc07$FEve,dgasc07$FDiv,dgasc07$FDis,dgasc07$RaoQ)
+  dgasc08<-dbFD(gasc08, clust.type = "centroid", stand.x = FALSE)
+  gasc08<-c(dgasc08$FRic,dgasc08$FEve,dgasc08$FDiv,dgasc08$FDis,dgasc08$RaoQ)
+  dgasc09<-dbFD(gasc09, clust.type = "centroid", stand.x = FALSE)
+  gasc09<-c(dgasc09$FRic,dgasc09$FEve,dgasc09$FDiv,dgasc09$FDis,dgasc09$RaoQ)
+  dgasc10<-dbFD(gasc10, clust.type = "centroid", stand.x = FALSE)
+  gasc10<-c(dgasc10$FRic,dgasc10$FEve,dgasc10$FDiv,dgasc10$FDis,dgasc10$RaoQ)
+  dgasc11<-dbFD(gasc11, clust.type = "centroid", stand.x = FALSE)
+  gasc11<-c(dgasc11$FRic,dgasc11$FEve,dgasc11$FDiv,dgasc11$FDis,dgasc11$RaoQ)
+  dgasc12<-dbFD(gasc12, clust.type = "centroid", stand.x = FALSE)
+  gasc12<-c(dgasc12$FRic,dgasc12$FEve,dgasc12$FDiv,dgasc12$FDis,dgasc12$RaoQ)
+  dgasc13<-dbFD(gasc13, clust.type = "centroid", stand.x = FALSE)
+  gasc13<-c(dgasc13$FRic,dgasc13$FEve,dgasc13$FDiv,dgasc13$FDis,dgasc13$RaoQ)
+  dgasc14<-dbFD(gasc14, clust.type = "centroid", stand.x = FALSE)
+  gasc14<-c(dgasc14$FRic,dgasc14$FEve,dgasc14$FDiv,dgasc14$FDis,dgasc14$RaoQ)
+
+  dlapi01<-dbFD(lapi01, clust.type = "centroid", stand.x = FALSE)
+  lapi01<-c(dlapi01$FRic,dlapi01$FEve,dlapi01$FDiv,dlapi01$FDis,dlapi01$RaoQ)
+  dlapi02<-dbFD(lapi02, clust.type = "centroid", stand.x = FALSE)
+  lapi02<-c(dlapi02$FRic,dlapi02$FEve,dlapi02$FDiv,dlapi02$FDis,dlapi02$RaoQ)
+  dlapi03<-dbFD(lapi03, clust.type = "centroid", stand.x = FALSE)
+  lapi03<-c(dlapi03$FRic,dlapi03$FEve,dlapi03$FDiv,dlapi03$FDis,dlapi03$RaoQ)
+  dlapi04<-dbFD(lapi04, clust.type = "centroid", stand.x = FALSE)
+  lapi04<-c(dlapi04$FRic,dlapi04$FEve,dlapi04$FDiv,dlapi04$FDis,dlapi04$RaoQ)
+  dlapi05<-dbFD(lapi05, clust.type = "centroid", stand.x = FALSE)
+  lapi05<-c(dlapi05$FRic,dlapi05$FEve,dlapi05$FDiv,dlapi05$FDis,dlapi05$RaoQ)
+  dlapi06<-dbFD(lapi06, clust.type = "centroid", stand.x = FALSE)
+  lapi06<-c(dlapi06$FRic,dlapi06$FEve,dlapi06$FDiv,dlapi06$FDis,dlapi06$RaoQ)
+  dlapi07<-dbFD(lapi07, clust.type = "centroid", stand.x = FALSE)
+  lapi07<-c(dlapi07$FRic,dlapi07$FEve,dlapi07$FDiv,dlapi07$FDis,dlapi07$RaoQ)
+  dlapi08<-dbFD(lapi08, clust.type = "centroid", stand.x = FALSE)
+  lapi08<-c(dlapi08$FRic,dlapi08$FEve,dlapi08$FDiv,dlapi08$FDis,dlapi08$RaoQ)
+  dlapi09<-dbFD(lapi09, clust.type = "centroid", stand.x = FALSE)
+  lapi09<-c(dlapi09$FRic,dlapi09$FEve,dlapi09$FDiv,dlapi09$FDis,dlapi09$RaoQ)
+  dlapi10<-dbFD(lapi10, clust.type = "centroid", stand.x = FALSE)
+  lapi10<-c(dlapi10$FRic,dlapi10$FEve,dlapi10$FDiv,dlapi10$FDis,dlapi10$RaoQ)
+  dlapi11<-dbFD(lapi11, clust.type = "centroid", stand.x = FALSE)
+  lapi11<-c(dlapi11$FRic,dlapi11$FEve,dlapi11$FDiv,dlapi11$FDis,dlapi11$RaoQ)
+  dlapi12<-dbFD(lapi12, clust.type = "centroid", stand.x = FALSE)
+  lapi12<-c(dlapi12$FRic,dlapi12$FEve,dlapi12$FDiv,dlapi12$FDis,dlapi12$RaoQ)
+  dlapi13<-dbFD(lapi13, clust.type = "centroid", stand.x = FALSE)
+  lapi13<-c(dlapi13$FRic,dlapi13$FEve,dlapi13$FDiv,dlapi13$FDis,dlapi13$RaoQ)
+  dlapi14<-dbFD(lapi14, clust.type = "centroid", stand.x = FALSE)
+  lapi14<-c(dlapi14$FRic,dlapi14$FEve,dlapi14$FDiv,dlapi14$FDis,dlapi14$RaoQ)
+  dlapi15<-dbFD(lapi15, clust.type = "centroid", stand.x = FALSE)
+  lapi15<-c(dlapi15$FRic,dlapi15$FEve,dlapi15$FDiv,dlapi15$FDis,dlapi15$RaoQ)
+  dlapi16<-dbFD(lapi16, clust.type = "centroid", stand.x = FALSE)
+  lapi16<-c(dlapi16$FRic,dlapi16$FEve,dlapi16$FDiv,dlapi16$FDis,dlapi16$RaoQ)
+  dlapi17<-dbFD(lapi17, clust.type = "centroid", stand.x = FALSE)
+  lapi17<-c(dlapi17$FRic,dlapi17$FEve,dlapi17$FDiv,dlapi17$FDis,dlapi17$RaoQ)
+  
+  stri01 <- c(NA,NA,NA,NA,NA)
+  stri02 <- c(NA,NA,NA,NA,NA)
+  stri03 <- c(NA,NA,NA,NA,NA)
+# 5. FD matrix creation and writing. ============================================================================
+
+  fd<-rbind(cham01,cham02,cham03,cham04,cham05,cham06,cham07,
+            gasc01,gasc02,gasc03,gasc04,gasc05,gasc06,gasc07,gasc08,gasc09,gasc10,gasc11,gasc12,gasc13,gasc14,
+            lapi01,lapi02,lapi03,lapi04,lapi05,lapi06,lapi07,lapi08,lapi09,lapi10,lapi11,lapi12,lapi13,lapi14,lapi15,lapi16,lapi17,
+            papi01,papi03,papi05,papi07,papi09,papi11,papi13,papi15,papi17,papi19,papi21,papi23,papi25,papi27,
+            para01,para02,para03,para04,para05,para06,para07,para08,para09,para10,para11,para12,para13,para14,para15,para16,para17,
+            stri01,stri02,stri03,
+            stro01,stro02,stro03,stro04,stro05,
+            vivi01,vivi02,vivi03,vivi04,vivi05,vivi06)
+  
+    colnames(fd)=c("FRic","FEve","FDic","hab.hetero","RaoQ")
+    fd <- as.data.frame(fd)
+  
+
+# 6 End =========================================================================================================
+
+  clean <-ls()
+    clean <-clean[-c(84)]
+  rm(list=clean)
+  rm(clean)
+  detach("package:FD", unload=TRUE)
+  detach("package:vegan", unload=TRUE)
+  detach("package:ade4", unload=TRUE)
+  library(vegan)
+  
+  
