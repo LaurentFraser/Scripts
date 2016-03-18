@@ -9,7 +9,8 @@
 #3    27  18   0.6  140
 
 #STEP 2: "melt" the data into long format
-  # Test Laurent
+
+
 #time variable value
 #1    T1       30
 #2    T1       25
@@ -94,3 +95,4 @@ p1 <- ggplot(data=GRIL.long, aes(x=time, y=value)) + geom_line()
 p1 + facet_wrap(~variable, scales="free_y", drop=FALSE, nrow=2)
 dev.off()
 
+### test 2 Nico
